@@ -1,45 +1,56 @@
 var PIXI = require('pixi.js')
 
-var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb});
-document.body.appendChild(renderer.view);
-
-// create the root of the scene graph
-var stage = new PIXI.Container();
-
-// create a texture from an image path
-var texture = PIXI.Texture.fromImage('images/bunny.png');
-
-// create a new Sprite using the texture
-var bunny = new PIXI.Sprite(texture);
-
-// center the sprite's anchor point
-bunny.anchor.x = 0.5;
-bunny.anchor.y = 0.5;
-
-// move the sprite to the center of the screen
-bunny.position.x = 200;
-bunny.position.y = 150;
-
-stage.addChild(bunny);
-
-// start animating
-animate();
-function animate() {
-    requestAnimationFrame(animate);
-
-    // just for fun, let's rotate mr rabbit a little
-    bunny.rotation += 0.1;
-
-    // render the container
-    renderer.render(stage);
+function Setup() {
+  var renderer = this._createRenderer()
+  var stage = this._createStage()
+  var bunny = this._createBunny()
+  stage.addChild(bunny)
+  this._createAnimation(renderer, stage, bunny)
+  this._createEventHandling(bunny)
 }
 
-document.onkeydown = function(event) {
-  if (event.keyCode === 37) {
-    bunny.position.x -= 1
-  }
+Setup.prototype._createRenderer = function() {
+  var renderer = PIXI.autoDetectRenderer(800, 600, { backgroundColor : 0x1099bb })
+  document.body.appendChild(renderer.view)
+  return renderer
+}
 
-  if (event.keyCode === 39) {
-    bunny.position.x += 1
+Setup.prototype._createStage = function() {
+  return new PIXI.Container()
+}
+
+Setup.prototype._createBunny = function(stage) {
+  var texture = PIXI.Texture.fromImage('images/bunny.png')
+  var bunny = new PIXI.Sprite(texture)
+
+  bunny.anchor.x = 0.5
+  bunny.anchor.y = 0.5
+
+  bunny.position.x = 200
+  bunny.position.y = 150
+
+  return bunny
+}
+
+Setup.prototype._createAnimation = function(renderer, stage, bunny) {
+  animate()
+  function animate() {
+      requestAnimationFrame(animate)
+      bunny.rotation += 0.1
+      renderer.render(stage)
   }
 }
+
+Setup.prototype._createEventHandling = function(bunny) {
+  document.onkeydown = function(event) {
+    if (event.keyCode === 37) {
+      bunny.position.x -= 1
+    }
+
+    if (event.keyCode === 39) {
+      bunny.position.x += 1
+    }
+  }
+}
+
+module.exports = Setup
