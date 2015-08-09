@@ -33,3 +33,13 @@ function animate() {
     // render the container
     renderer.render(stage);
 }
+
+document.onkeydown = function(event) {
+  if (event.keyCode === 37) {
+    bunny.position.x -= 1
+  }
+
+  if (event.keyCode === 39) {
+    bunny.position.x += 1
+  }
+}

@@ -2,7 +2,12 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     browserify: {
-      'build/bundle.js': ['javascript/app.js']
+      'build/bundle.js': ['javascript/app.js'],
+      options: {
+        browserifyOptions: {
+          debug: true
+        }
+      }
     }
   })
 
