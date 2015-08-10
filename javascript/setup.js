@@ -10,7 +10,7 @@ function Setup() {
 }
 
 Setup.prototype._createRenderer = function() {
-  var renderer = PIXI.autoDetectRenderer(800, 600, { backgroundColor : 0x1099bb })
+  var renderer = PIXI.autoDetectRenderer(800, 600, { backgroundColor : 0xFFFFFF })
   document.body.appendChild(renderer.view)
   return renderer
 }
