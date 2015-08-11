@@ -1,10 +1,12 @@
 var PIXI = require('pixi.js')
 
 function Setup() {
+  var self = this
   var renderer = this._createRenderer()
-  var stage = this._createStage()
-  this._createAnimation(renderer, stage)
-  this._createBraid(stage)
+  this.stage = new PIXI.Container()
+  this._createAnimation(renderer, this.stage)
+  var frames = this._createBraid(this.stage)
+  setInterval(function() { self.createImageWithText(frames) }, 1000)
 }
 
 Setup.prototype._createRenderer = function() {
@@ -13,48 +15,42 @@ Setup.prototype._createRenderer = function() {
   return renderer
 }
 
-Setup.prototype._createStage = function() {
-  return new PIXI.Container()
+Setup.prototype.createImageWithText = function(frames) {
+  var x = Math.random() * window.innerWidth
+  var y = Math.random() * window.innerHeight
+
+  var movie = new PIXI.extras.MovieClip(frames)
+  movie.position = new PIXI.Point(x, y)
+  movie.anchor.set(0.5)
+  movie.animationSpeed = 0.5
+  movie.play()
+  this.stage.addChild(movie)
+
+  if ( Math.random() > 0.5) {
+    var textConfig = {
+      font: 'bold 16px Arial',
+      stroke: '#FFFFFF',
+      strokeThickness: 5
+    }
+    var text = new PIXI.Text('Did someone say bacon pancakes?', textConfig)
+    text.position = new PIXI.Point(x + 50, y - 50)
+    this.stage.addChild(text)
+  }
 }
 
 Setup.prototype._createBraid = function(stage) {
-    var loopTime = 1000
+  var self = this
+  var frames = []
 
-    PIXI.loader
-      .add('images/braid.json')
-      .load(function() {
-        var frames = []
-        for (var i = 0; i < 26; i++) {
-          frames.push(PIXI.Texture.fromFrame('sprite' + i + '.png'))
-        }
+  PIXI.loader
+    .add('images/braid.json')
+    .load(function() {
+      for (var i = 0; i < 26; i++) {
+        frames.push(PIXI.Texture.fromFrame('sprite' + i + '.png'))
+      }
+    })
 
-        function doIt() {
-          var x = Math.random() * window.innerWidth
-          var y = Math.random() * window.innerHeight
-
-          var movie = new PIXI.extras.MovieClip(frames)
-          movie.position = new PIXI.Point(x, y)
-          movie.anchor.set(0.5)
-          movie.animationSpeed = 0.5
-          movie.play()
-          stage.addChild(movie)
-
-          if ( Math.random() > 0.5) {
-            var textConfig = {
-              font: 'bold 16px Arial',
-              stroke: '#FFFFFF',
-              strokeThickness: 5
-            }
-            var text = new PIXI.Text('Did someone say bacon pancakes?', textConfig)
-            text.position = new PIXI.Point(x + 50, y - 50)
-            stage.addChild(text)
-          }
-        }
-
-        setInterval(doIt, loopTime)
-        loopTime = loopTime - 10
-      })
-
+  return frames
 }
 
 Setup.prototype._createAnimation = function(renderer, stage) {
