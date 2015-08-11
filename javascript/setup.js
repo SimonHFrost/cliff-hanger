@@ -7,6 +7,7 @@ function Setup() {
   stage.addChild(bunny)
   this._createAnimation(renderer, stage, bunny)
   this._createEventHandling(bunny)
+  this._createBraid(stage)
 }
 
 Setup.prototype._createRenderer = function() {
@@ -32,12 +33,31 @@ Setup.prototype._createBunny = function(stage) {
   return bunny
 }
 
+Setup.prototype._createBraid = function(stage) {
+  PIXI.loader
+    .add('images/braid.json')
+    .load(function() {
+      var frames = []
+      for (var i = 0; i < 5; i++) {
+        frames.push(PIXI.Texture.fromFrame('sprite' + i + '.png'))
+      }
+
+      movie = new PIXI.extras.MovieClip(frames)
+      movie.position.set(300)
+      movie.anchor.set(0.5)
+      movie.animationSpeed = 0.5
+      movie.play()
+
+      stage.addChild(movie)
+    })
+}
+
 Setup.prototype._createAnimation = function(renderer, stage, bunny) {
   animate()
   function animate() {
-      requestAnimationFrame(animate)
-      bunny.rotation += 0.1
-      renderer.render(stage)
+    requestAnimationFrame(animate)
+    bunny.rotation += 0.1
+    renderer.render(stage)
   }
 }
 
