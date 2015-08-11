@@ -6,7 +6,7 @@ function Setup() {
   this.stage = new PIXI.Container()
   this._createAnimation(renderer, this.stage)
   var frames = this._createBraid(this.stage)
-  setInterval(function() { self.createImageWithText(frames) }, 1000)
+  setInterval(function() { self._createImageWithText(frames) }, 1000)
 }
 
 Setup.prototype._createRenderer = function() {
@@ -15,7 +15,7 @@ Setup.prototype._createRenderer = function() {
   return renderer
 }
 
-Setup.prototype.createImageWithText = function(frames) {
+Setup.prototype._createImageWithText = function(frames) {
   var x = Math.random() * window.innerWidth
   var y = Math.random() * window.innerHeight
 
@@ -27,15 +27,19 @@ Setup.prototype.createImageWithText = function(frames) {
   this.stage.addChild(movie)
 
   if ( Math.random() > 0.5) {
-    var textConfig = {
+    this._createText(x + 50, y - 50)
+  }
+}
+
+Setup.prototype._createText = function(x, y) {
+  var textConfig = {
       font: 'bold 16px Arial',
       stroke: '#FFFFFF',
       strokeThickness: 5
     }
-    var text = new PIXI.Text('Did someone say bacon pancakes?', textConfig)
-    text.position = new PIXI.Point(x + 50, y - 50)
-    this.stage.addChild(text)
-  }
+  var text = new PIXI.Text('Did someone say bacon pancakes?', textConfig)
+  text.position = new PIXI.Point(x, y)
+  this.stage.addChild(text)
 }
 
 Setup.prototype._createBraid = function(stage) {
