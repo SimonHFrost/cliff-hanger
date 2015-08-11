@@ -40,7 +40,12 @@ Setup.prototype._createBraid = function(stage) {
           movie.play()
           stage.addChild(movie)
 
-          var text = new PIXI.Text('Did someone say bacon pancakes?')
+          var textConfig = {
+            font: 'bold 16px Arial',
+            stroke: '#FFFFFF',
+            strokeThickness: 5
+          }
+          var text = new PIXI.Text('Did someone say bacon pancakes?', textConfig)
           text.position = new PIXI.Point(x + 50, y - 50)
           stage.addChild(text)
         }
