@@ -8,7 +8,7 @@ function Setup() {
 }
 
 Setup.prototype._createRenderer = function() {
-  var renderer = PIXI.autoDetectRenderer(screen.width, screen.height, { backgroundColor : 0x00FF00 })
+  var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor : 0x00FF00 })
   document.body.appendChild(renderer.view)
   return renderer
 }
@@ -18,7 +18,7 @@ Setup.prototype._createStage = function() {
 }
 
 Setup.prototype._createBraid = function(stage) {
-    var loopTime = 500
+    var loopTime = 1000
 
     PIXI.loader
       .add('images/braid.json')
@@ -29,17 +29,20 @@ Setup.prototype._createBraid = function(stage) {
         }
 
         function doIt() {
+          var border = 128
+          var x = border + Math.random() * (window.innerWidth - border)
+          var y = border + Math.random() * (window.innerHeight - border)
+
           var movie = new PIXI.extras.MovieClip(frames)
-
-          var x = Math.random() * screen.width
-          var y = Math.random() * screen.height
-
           movie.position = new PIXI.Point(x, y)
           movie.anchor.set(0.5)
           movie.animationSpeed = 0.5
           movie.play()
-
           stage.addChild(movie)
+
+          var text = new PIXI.Text('Did someone say bacon pancakes?')
+          text.position = new PIXI.Point(x + 50, y - 50)
+          stage.addChild(text)
         }
 
         setInterval(doIt, loopTime)
