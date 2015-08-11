@@ -38,7 +38,7 @@ Setup.prototype._createBraid = function(stage) {
     .add('images/braid.json')
     .load(function() {
       var frames = []
-      for (var i = 0; i < 5; i++) {
+      for (var i = 0; i < 26; i++) {
         frames.push(PIXI.Texture.fromFrame('sprite' + i + '.png'))
       }
 
