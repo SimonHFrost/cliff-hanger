@@ -26,20 +26,24 @@ Setup.prototype._createImageWithText = function(frames) {
   movie.play()
   this.stage.addChild(movie)
 
+  setInterval(function() {
+    movie.position.x = movie.position.x + (window.innerWidth - movie.position.x) * 0.01
+  }, 100)
+
   if ( Math.random() > 0.5) {
-    this._createText(x + 50, y - 50)
+    this._createText(movie, x + 50, y - 50)
   }
 }
 
-Setup.prototype._createText = function(x, y) {
+Setup.prototype._createText = function(movie, x, y) {
   var textConfig = {
-      font: 'bold 16px Arial',
-      stroke: '#FFFFFF',
-      strokeThickness: 5
-    }
+    font: 'bold 16px Arial',
+    stroke: '#FFFFFF',
+    strokeThickness: 5
+  }
   var text = new PIXI.Text('Did someone say bacon pancakes?', textConfig)
-  text.position = new PIXI.Point(x, y)
-  this.stage.addChild(text)
+  text.position = new PIXI.Point(50, -50)
+  movie.addChild(text)
 }
 
 Setup.prototype._createBraid = function(stage) {
