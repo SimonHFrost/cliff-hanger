@@ -22,12 +22,13 @@ Setup.prototype._createImageWithText = function(frames) {
   var movie = new PIXI.extras.MovieClip(frames)
   movie.position = new PIXI.Point(x, y)
   movie.anchor.set(0.5)
-  movie.animationSpeed = 0.5
   movie.play()
   this.stage.addChild(movie)
 
   setInterval(function() {
-    movie.position.x = movie.position.x + (window.innerWidth - movie.position.x) * 0.01
+    var distanceFromEnd = window.innerWidth - movie.position.x
+    movie.animationSpeed = 0.005 * distanceFromEnd
+    movie.position.x = movie.position.x + distanceFromEnd * 0.01
   }, 100)
 
   if ( Math.random() > 0.5) {
