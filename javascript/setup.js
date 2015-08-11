@@ -8,7 +8,7 @@ function Setup() {
 }
 
 Setup.prototype._createRenderer = function() {
-  var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor : 0x00FF00 })
+  var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor : 0x00BB00 })
   document.body.appendChild(renderer.view)
   return renderer
 }
@@ -29,9 +29,8 @@ Setup.prototype._createBraid = function(stage) {
         }
 
         function doIt() {
-          var border = 128
-          var x = border + Math.random() * (window.innerWidth - border)
-          var y = border + Math.random() * (window.innerHeight - border)
+          var x = Math.random() * window.innerWidth
+          var y = Math.random() * window.innerHeight
 
           var movie = new PIXI.extras.MovieClip(frames)
           movie.position = new PIXI.Point(x, y)
@@ -40,14 +39,16 @@ Setup.prototype._createBraid = function(stage) {
           movie.play()
           stage.addChild(movie)
 
-          var textConfig = {
-            font: 'bold 16px Arial',
-            stroke: '#FFFFFF',
-            strokeThickness: 5
+          if ( Math.random() > 0.5) {
+            var textConfig = {
+              font: 'bold 16px Arial',
+              stroke: '#FFFFFF',
+              strokeThickness: 5
+            }
+            var text = new PIXI.Text('Did someone say bacon pancakes?', textConfig)
+            text.position = new PIXI.Point(x + 50, y - 50)
+            stage.addChild(text)
           }
-          var text = new PIXI.Text('Did someone say bacon pancakes?', textConfig)
-          text.position = new PIXI.Point(x + 50, y - 50)
-          stage.addChild(text)
         }
 
         setInterval(doIt, loopTime)
