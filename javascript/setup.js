@@ -32,7 +32,7 @@ Setup.prototype._createImageWithText = function(frames) {
   var y = Math.random() * window.innerHeight
 
   var movie = new PIXI.extras.MovieClip(frames)
-  movie.position = new PIXI.Point(0, y)
+  movie.position = new PIXI.Point(-50, y)
   movie.anchor.set(0.5)
   movie.play()
   this.stage.addChild(movie)
