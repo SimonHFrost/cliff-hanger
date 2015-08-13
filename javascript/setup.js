@@ -46,21 +46,6 @@ Setup.prototype._createImageWithText = function(frames) {
       movie.position.x = movie.position.x + distanceFromEnd * 0.01
     }
   }, 100)
-
-  if ( Math.random() > 0.5) {
-    // this._createText(movie, x + 50, y - 50)
-  }
-}
-
-Setup.prototype._createText = function(movie, x, y) {
-  var textConfig = {
-    font: 'bold 16px Arial',
-    stroke: '#FFFFFF',
-    strokeThickness: 5
-  }
-  var text = new PIXI.Text('Did someone say bacon pancakes?', textConfig)
-  text.position = new PIXI.Point(50, -50)
-  movie.addChild(text)
 }
 
 Setup.prototype._prepareSpriteSheet = function(stage) {
