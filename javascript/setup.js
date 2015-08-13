@@ -27,7 +27,9 @@ Setup.prototype._createImageWithText = function(frames) {
 
   setInterval(function() {
     var distanceFromEnd = window.innerWidth - movie.position.x
-    movie.animationSpeed = 0.005 * distanceFromEnd
+    var scale = 0.1
+    var offset = 0.1
+    movie.animationSpeed = (0.005 * distanceFromEnd) * scale + offset
     movie.position.x = movie.position.x + distanceFromEnd * 0.01
   }, 100)
 
