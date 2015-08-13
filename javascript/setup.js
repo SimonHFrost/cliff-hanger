@@ -4,6 +4,7 @@ function Setup() {
   var self = this
   var renderer = this._createRenderer()
   this.stage = new PIXI.Container()
+  this._createBackground(this.stage, renderer)
   this._createAnimation(renderer, this.stage)
   var frames = this._prepareSpriteSheet(this.stage)
   setInterval(function() { self._createImageWithText(frames) }, 1000)
@@ -13,6 +14,17 @@ Setup.prototype._createRenderer = function() {
   var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor : 0x00BB00 })
   document.body.appendChild(renderer.view)
   return renderer
+}
+
+Setup.prototype._createBackground = function(stage, renderer) {
+  var texture = PIXI.Texture.fromImage('images/grass.jpg')
+  var tilingSprite = new PIXI.extras.TilingSprite(texture, renderer.width, renderer.height)
+
+  setInterval(function() {
+    tilingSprite.tilePosition.x -= 1
+  }, 20)
+
+  stage.addChild(tilingSprite)
 }
 
 Setup.prototype._createImageWithText = function(frames) {
