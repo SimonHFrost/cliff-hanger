@@ -7,7 +7,7 @@ function Setup() {
   this._createBackground(this.stage, renderer)
   this._createAnimation(renderer, this.stage)
   var frames = this._prepareSpriteSheet(this.stage)
-  setInterval(function() { self._createImageWithText(frames) }, 1000)
+  setInterval(function() { self._createCharacter(frames) }, 1000)
 }
 
 Setup.prototype._createRenderer = function() {
@@ -27,7 +27,7 @@ Setup.prototype._createBackground = function(stage, renderer) {
   stage.addChild(tilingSprite)
 }
 
-Setup.prototype._createImageWithText = function(frames) {
+Setup.prototype._createCharacter = function(frames) {
   var x = Math.random() * window.innerWidth
   var y = Math.random() * window.innerHeight
 
